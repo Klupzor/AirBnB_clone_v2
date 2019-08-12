@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
             key = my_list[0] + '.' + obj.id
             v = objects[key]
             i = 1
-            while i < len(my_list) - 1:
+            while i < len(my_list):
                 param = my_list[i].split('=')
                 param[1] = param[1].replace('_', ' ')
                 if param[1][0] == '"':
