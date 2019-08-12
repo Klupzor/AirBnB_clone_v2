@@ -53,9 +53,7 @@ class HBNBCommand(cmd.Cmd):
                 param[1] = param[1].replace('_', ' ')
                 if param[1][0] == '"':
                     temp = param[1][1: -1]
-                    print(temp)
                     temp = temp.replace('"', '\"')
-                    print(temp)
                     param[1] = '{}'.format(temp)
                 try:
                     v.__dict__[param[0]] = eval(param[1])
