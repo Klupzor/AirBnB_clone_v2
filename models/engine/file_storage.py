@@ -25,7 +25,15 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-        return self.__objects
+        if cls is None:
+            return self.__objects
+        search = str(super(cls))
+        search = search.split("'")
+        new_dict = dict()
+        for key, val in self.__objects.items():
+            if search[1] in str(key):
+                new_dict[key] = val
+        return new_dict
 
     def new(self, obj):
         """sets __object to given obj
@@ -57,12 +65,13 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        print('REPR: ')
+        """Delete object
+        """
         new = str(obj)
         new = new.replace('[', '')
         new = new.replace(']', '')
         new = new.replace('(', '')
         new = new.replace(')', '')
-        l = new.split()
-        key = "{}.{}".format(l[0], l[1])
+        nlist = new.split()
+        key = "{}.{}".format(nlist[0], nlist[1])
         del self.__objects[key]
