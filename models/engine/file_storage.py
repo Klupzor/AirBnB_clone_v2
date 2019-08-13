@@ -67,11 +67,12 @@ class FileStorage:
     def delete(self, obj=None):
         """Delete object
         """
-        new = str(obj)
-        new = new.replace('[', '')
-        new = new.replace(']', '')
-        new = new.replace('(', '')
-        new = new.replace(')', '')
-        nlist = new.split()
-        key = "{}.{}".format(nlist[0], nlist[1])
-        del self.__objects[key]
+        if obj:
+            new = str(obj)
+            new = new.replace('[', '')
+            new = new.replace(']', '')
+            new = new.replace('(', '')
+            new = new.replace(')', '')
+            nlist = new.split()
+            key = "{}.{}".format(nlist[0], nlist[1])
+            del self.__objects[key]
