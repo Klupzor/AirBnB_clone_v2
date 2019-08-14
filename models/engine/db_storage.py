@@ -19,7 +19,11 @@ class DBStorage:
         HBNB_MYSQL_HOST = os.environ.get('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = os.environ.get('HBNB_MYSQL_DB')
         self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}:3306/{}'.format(HBNB_MYSQL_USER, HBNB_MYSQL_PWD, HBNB_MYSQL_HOST, HBNB_MYSQL_DB), pool_pre_ping=True)
+            'mysql+mysqldb://{}:{}@{}:3306/{}'.format(HBNB_MYSQL_USER,
+                                                      HBNB_MYSQL_PWD,
+                                                      HBNB_MYSQL_HOST,
+                                                      HBNB_MYSQL_DB),
+            pool_pre_ping=True)
         if os.environ.get('HBNB_ENV') == 'test':
             self.__engine.drop_all(tables)
 
