@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
+"""MySQL database storage"""
 from sqlalchemy.orm import scoped_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import State, City
 from models.base_model import BaseModel, Base
-
 import os
 
 
 class DBStorage:
-
+    """Manages database
+    """
     __engine = None
     __session = None
 
     def __init__(self):
+        """initialization
+        """
         HBNB_MYSQL_USER = os.environ.get('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = os.environ.get('HBNB_MYSQL_PWD')
         HBNB_MYSQL_HOST = os.environ.get('HBNB_MYSQL_HOST')
@@ -28,6 +31,8 @@ class DBStorage:
             self.__engine.drop_all(tables)
 
     def all(self, cls=None):
+        """shows all objects
+        """
         new_dict = dict()
         if cls:
             temp = self.__session.query(eval(cls)).all()
@@ -41,15 +46,23 @@ class DBStorage:
         return new_dict
 
     def new(self, obj):
+        """adds new object otsession
+        """
         self.__session.add(obj)
 
     def save(self):
+        """saves session
+        """
         self.__session.commit()
 
     def delete(self, obj=None):
+        """deletes an object
+        """
         pass
 
     def reload(self):
+        """reloads database
+        """
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine)
         Session = scoped_session(session_factory)
