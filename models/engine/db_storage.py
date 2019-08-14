@@ -28,7 +28,7 @@ class DBStorage:
                                                       HBNB_MYSQL_DB),
             pool_pre_ping=True)
         if os.environ.get('HBNB_ENV') == 'test':
-            self.__engine.drop_all(tables)
+            Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
         """shows all objects
