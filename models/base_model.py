@@ -2,7 +2,6 @@
 """This is the base model class for AirBnB"""
 import uuid
 import models
-from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -12,6 +11,9 @@ class BaseModel:
     """This class will defines all common attributes/methods
     for other classes
     """
+    id = Column(String(60), primary_key=True, unique=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
 
     id = Column(String(60), primary_key=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
@@ -55,7 +57,6 @@ class BaseModel:
         """
         self.updated_at = datetime.now()
         models.storage.new(self)
-        print(self)
         models.storage.save()
 
     def to_dict(self):
