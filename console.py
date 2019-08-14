@@ -43,10 +43,6 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(' ')
             obj = eval("{}()".format(my_list[0]))
-            obj.save()
-            #objects = storage.all()
-            #key = my_list[0] + '.' + obj.id
-            #v = objects[key]
             i = 1
             while i < len(my_list):
                 param = my_list[i].split('=')
@@ -57,6 +53,7 @@ class HBNBCommand(cmd.Cmd):
                     param[1] = '{}'.format(temp)
                 try:
                     obj.__dict__[param[0]] = eval(param[1])
+                    obj.save()
                 except Exception:
                     obj.__dict__[param[0]] = param[1]
                     obj.save()
