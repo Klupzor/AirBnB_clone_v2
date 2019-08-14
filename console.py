@@ -43,10 +43,6 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(' ')
             obj = eval("{}()".format(my_list[0]))
-            obj.save()
-            objects = storage.all()
-            key = my_list[0] + '.' + obj.id
-            v = objects[key]
             i = 1
             while i < len(my_list):
                 param = my_list[i].split('=')
@@ -56,11 +52,11 @@ class HBNBCommand(cmd.Cmd):
                     temp = temp.replace('"', '\"')
                     param[1] = '{}'.format(temp)
                 try:
-                    v.__dict__[param[0]] = eval(param[1])
+                    obj.__dict__[param[0]] = eval(param[1])
                 except Exception:
-                    v.__dict__[param[0]] = param[1]
-                    v.save()
+                    obj.__dict__[param[0]] = param[1]
                 i = i + 1
+            obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
             print("** class name missing **")
@@ -135,9 +131,9 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             NameError: when there is no object taht has the name
         """
-        objects = storage.all()
         my_list = []
         if not line:
+            objects = storage.all()
             for key in objects:
                 my_list.append(objects[key])
             print(my_list)
@@ -146,6 +142,7 @@ class HBNBCommand(cmd.Cmd):
             args = line.split(" ")
             if args[0] not in self.all_classes:
                 raise NameError()
+            objects = storage.all(args[0])
             for key in objects:
                 name = key.split('.')
                 if name[0] == args[0]:

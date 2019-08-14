@@ -2,9 +2,9 @@
 """This is the base model class for AirBnB"""
 import uuid
 import models
-from datetime import datetime
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
+
 Base = declarative_base()
 
 class BaseModel:
@@ -12,6 +12,10 @@ class BaseModel:
     for other classes
     """
     id = Column(String(60), primary_key=True, unique=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+
+    id = Column(String(60), primary_key=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
 
@@ -64,4 +68,9 @@ class BaseModel:
         my_dict["__class__"] = str(type(self).__name__)
         my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
+        if "_sa_instance_state" in my_dict.keys():
+            del my_dict['_sa_instance_state']
         return my_dict
+
+    def delete(self):
+        models.storage.delete(self)
