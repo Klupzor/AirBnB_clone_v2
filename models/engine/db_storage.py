@@ -26,7 +26,7 @@ class DBStorage:
     def all(self, cls=None):
         new_dict = dict()
         if cls:
-            temp = self.__session.query(cls).all()
+            temp = self.__session.query(eval(cls)).all()
         else:
             temp = self.__session.query(State, City).all()
         for item in temp:
@@ -50,4 +50,3 @@ class DBStorage:
         session_factory = sessionmaker(bind=self.__engine)
         Session = scoped_session(session_factory)
         self.__session = Session()
-        print("\n Reload Done!\n")
