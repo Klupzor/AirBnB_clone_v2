@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
+from sqlalchemy.orm import scoped_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models.base_model import BaseModel, Base
 from models import State, City
+from models.base_model import BaseModel, Base
+
 import os
 
 
@@ -22,17 +24,22 @@ class DBStorage:
             self.__engine.drop_all(tables)
 
     def all(self, cls=None):
-        return self.__session
+        print("\nOn all function\n")
+        temp = self.__session.query(cls).all()
+        print(temp)
 
     def new(self, obj):
-        pass
+        self.__session.add(obj)
 
     def save(self):
-        pass
+        self.__session.commit()
 
     def delete(self, obj=None):
         pass
 
     def reload(self):
         Base.metadata.create_all(self.__engine)
-        self.__session = sessionmaker(bind=self.__engine)
+        session_factory = sessionmaker(bind=self.__engine)
+        Session = scoped_session(session_factory)
+        self.__session = Session()
+        print("\n Reload Done!\n")

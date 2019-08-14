@@ -44,9 +44,9 @@ class HBNBCommand(cmd.Cmd):
             my_list = line.split(' ')
             obj = eval("{}()".format(my_list[0]))
             obj.save()
-            objects = storage.all()
-            key = my_list[0] + '.' + obj.id
-            v = objects[key]
+            #objects = storage.all()
+            #key = my_list[0] + '.' + obj.id
+            #v = objects[key]
             i = 1
             while i < len(my_list):
                 param = my_list[i].split('=')
@@ -56,10 +56,10 @@ class HBNBCommand(cmd.Cmd):
                     temp = temp.replace('"', '\"')
                     param[1] = '{}'.format(temp)
                 try:
-                    v.__dict__[param[0]] = eval(param[1])
+                    obj.__dict__[param[0]] = eval(param[1])
                 except Exception:
-                    v.__dict__[param[0]] = param[1]
-                    v.save()
+                    obj.__dict__[param[0]] = param[1]
+                    obj.save()
                 i = i + 1
             print("{}".format(obj.id))
         except SyntaxError:
