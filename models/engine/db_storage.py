@@ -24,9 +24,17 @@ class DBStorage:
             self.__engine.drop_all(tables)
 
     def all(self, cls=None):
-        print("\nOn all function\n")
-        temp = self.__session.query(cls).all()
-        print(temp)
+        new_dict = dict()
+        if cls:
+            temp = self.__session.query(cls).all()
+        else:
+            temp = self.__session.query(State, City).all()
+        for item in temp:
+            thing = str(item).split(' ')
+            key = thing[0][1:-1] + '.' + thing[1][1:-1]
+            d = {key: item}
+            new_dict.update(d)
+        return new_dict
 
     def new(self, obj):
         self.__session.add(obj)

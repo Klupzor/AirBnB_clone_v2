@@ -53,11 +53,10 @@ class HBNBCommand(cmd.Cmd):
                     param[1] = '{}'.format(temp)
                 try:
                     obj.__dict__[param[0]] = eval(param[1])
-                    obj.save()
                 except Exception:
                     obj.__dict__[param[0]] = param[1]
-                    obj.save()
                 i = i + 1
+            obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
             print("** class name missing **")
