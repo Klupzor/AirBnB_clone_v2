@@ -3,7 +3,7 @@
 from sqlalchemy.orm import scoped_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import State, City, User
+from models import State, City, User, Place
 from models.base_model import BaseModel, Base
 import os
 
@@ -37,7 +37,7 @@ class DBStorage:
         if cls:
             temp = self.__session.query(eval(cls)).all()
         else:
-            temp = self.__session.query(State, City, User).all()
+            temp = self.__session.query(State, City, User, Place).all()
         for item in temp:
             thing = str(item).split(' ')
             key = thing[0][1:-1] + '.' + thing[1][1:-1]
