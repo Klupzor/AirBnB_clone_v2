@@ -2,8 +2,11 @@
 """This is the place class"""
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 
+place_amenity = Table('place_amenity', Base.metadata,
+        Column('place_id', String(60), ForeignKey('places.id')),
+        Column('amenity_id', String(60), ForeignKey('amenities.id')))
 
 class Place(BaseModel, Base):
     """This is the class for Place
@@ -33,3 +36,5 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     amenity_ids = []
     reviews = relationship('Review', cascade='all, delete', backref='place')
+
+    amenities = relationship('Amenity', secondary=place_amenity, viewonly=False)
