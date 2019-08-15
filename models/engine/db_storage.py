@@ -3,7 +3,7 @@
 from sqlalchemy.orm import scoped_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import State, City, User, Place
+from models import State, City, User, Place, Review, Amenity
 from models.base_model import BaseModel, Base
 import os
 
