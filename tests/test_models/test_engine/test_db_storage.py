@@ -4,8 +4,6 @@ import unittest
 import pep8
 import json
 import os
-import sys
-import MySQLdb
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -17,31 +15,49 @@ from models.engine.db_storage import DBStorage
 
 
 class TestDBStorage(unittest.TestCase):
-    '''this will test the FileStorage'''
+    '''this will test the DBStorage'''
 
     @classmethod
     def setUpClass(cls):
         """set up for test"""
-        user_name = os.environ.get('HBNB_MYSQL_USER')
-        password = os.environ.get('HBNB_MYSQL_PWD')
-        database_name = os.environ.get('HBNB_MYSQL_DB')
-        host_name = os.environ.get('HBNB_MYSQL_HOST')
-
-        db = MySQLdb.connect(
-            host=host_name,
-            user=user_name,
-            passwd=password,
-            db=database_name)
-
-        cur = db.cursor()
+        cls.user = User()
+        cls.user.first_name = "Kev"
+        cls.user.last_name = "Yo"
+        cls.user.email = "1234@yahoo.com"
+        cls.storage = DBStorage()
 
     @classmethod
     def teardown(cls):
         """at the end of the test this will tear it down"""
-        cur.close()
+        del cls.user
 
-    def test_pep8_DBStorage(self):
+    def tearDown(self):
+        """teardown"""
+        try:
+            os.remove("file.json")
+        except Exception:
+            pass
+
+    def test_pep8_FileStorage(self):
         """Tests pep8 style"""
         style = pep8.StyleGuide(quiet=True)
         p = style.check_files(['models/engine/db_storage.py'])
         self.assertEqual(p.total_errors, 0, "fix pep8")
+
+    def test_all(self):
+        """tests if all works in DBStorage"""
+        pass
+
+    def test_new(self):
+        """test when new is created"""
+        pass
+
+    def test_reload_db_storage(self):
+        """
+        tests reload
+        """
+        pass
+
+
+if __name__ == "__main__":
+    unittest.main()
