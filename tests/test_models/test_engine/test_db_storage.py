@@ -4,6 +4,8 @@ import unittest
 import pep8
 import json
 import os
+import sys
+import MySQLdb
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -20,16 +22,23 @@ class TestDBStorage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """set up for test"""
-        cls.user = User()
-        cls.user.first_name = "Kev"
-        cls.user.last_name = "Yo"
-        cls.user.email = "1234@yahoo.com"
-        cls.storage = DBStorage()
+        user_name = os.environ.get('HBNB_MYSQL_USER')
+        password = os.environ.get('HBNB_MYSQL_PWD')
+        database_name = os.environ.get('HBNB_MYSQL_DB')
+        host_name = os.environ.get('HBNB_MYSQL_HOST')
+
+        db = MySQLdb.connect(
+            host=host_name,
+            user=user_name,
+            passwd=password,
+            db=database_name)
+
+        cur = db.cursor()
 
     @classmethod
     def teardown(cls):
         """at the end of the test this will tear it down"""
-        del cls.user
+        cur.close()
 
     def test_pep8_DBStorage(self):
         """Tests pep8 style"""
