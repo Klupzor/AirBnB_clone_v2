@@ -1,14 +1,7 @@
 #!/usr/bin/env bash
 # Configuration
-dpkg -s nginx &> /dev/null  
 
-if [ $? -ne 0 ]
-then
-
-    sudo apt-get update
-    sudo apt-get -y install nginx
-fi
-
+dpkg -s nginx &> /dev/null  && sudo apt-get update && sudo apt-get -y install nginx for success 
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 echo "Testing Nginx" | sudo tee /data/web_static/releases/test/index.html
