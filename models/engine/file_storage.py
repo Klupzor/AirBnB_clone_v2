@@ -76,3 +76,6 @@ class FileStorage:
             nlist = new.split()
             key = "{}.{}".format(nlist[0], nlist[1])
             del self.__objects[key]
+
+    def close(self):
+        reload()
