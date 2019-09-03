@@ -70,4 +70,6 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
+        """ Close dtabase
+        """
         self.__session.close()
