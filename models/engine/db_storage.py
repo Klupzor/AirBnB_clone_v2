@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """MySQL database storage"""
 from sqlalchemy.orm import scoped_session
 from sqlalchemy import create_engine
@@ -72,4 +72,4 @@ class DBStorage:
     def close(self):
         """ Close dtabase
         """
-        self.__session.close()
+        self.__session.remove()
