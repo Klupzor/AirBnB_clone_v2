@@ -71,7 +71,10 @@ def states(id=None):
     '''List of all of States id'''
     if (id):
         states = storage.all('State')
-        cities = states["State." + id]
+        try:
+            cities = states["State." + id]
+        except KeyError:
+            return render_template('9-states.html', error="Not found!", id=id)
         return render_template('9-states.html', states=cities, id=id)
     else:
         states = storage.all('State').values()

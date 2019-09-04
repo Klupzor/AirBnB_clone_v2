@@ -4,7 +4,10 @@
         <TITLE>HBNB</TITLE>
     </HEAD>
     <BODY>
-    	{% if id|length %}
+    	{% if id is defined %}
+	{% if error is defined %}
+	<H1>{{ error }}</H1>
+	{% else %}
 	<H1>State: {{ states.name }}</H1>
 	<H3>Cities:</H3>
 	<UL>
@@ -12,6 +15,7 @@
                 <LI>{{ city.id }}: <B>{{ city.name }}</B></LI>
                 {% endfor %}
 	</UL>
+	{% endif %}
 	{% else %}
         <H1>States</H1>
         <UL>
