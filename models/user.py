@@ -2,7 +2,7 @@
 """This is the user class"""
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from models.base_model import BaseModel, Base
+from models.base_model import BaseModel, Base, os_type_storage
 
 
 class User(BaseModel, Base):
@@ -13,10 +13,16 @@ class User(BaseModel, Base):
         first_name: first name
         last_name: last name
     """
-    __tablename__ = 'users'
-    email = Column(String(128), nullable=False)
-    password = Column(String(128), nullable=False)
-    first_name = Column(String(128))
-    last_name = Column(String(128))
-    places = relationship('Place', cascade='all, delete', backref='user')
-    reviews = relationship('Review', cascade='all, delete', backref='user')
+    if os_type_storage == "db":
+        __tablename__ = 'users'
+        email = Column(String(128), nullable=False)
+        password = Column(String(128), nullable=False)
+        first_name = Column(String(128))
+        last_name = Column(String(128))
+        places = relationship('Place', cascade='all, delete', backref='user')
+        reviews = relationship('Review', cascade='all, delete', backref='user')
+    else:
+        email = ""
+        password = ""
+        first_name = ""
+        last_name = ""
