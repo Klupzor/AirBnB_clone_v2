@@ -57,3 +57,7 @@ div.amenitie:hover ul.popover {
     position: relative;
     top: 15px;
 }
+
+.popover ul {
+    list-style: none;
+}
